@@ -4,5 +4,23 @@ echo 'deb https://apt.dockerproject.org/repo ubuntu-precise main' > /etc/apt/sou
 sudo apt-get -y update
 sudo apt-get -y install unzip docker-engine curl
 curl -o /tmp/nomad.zip -L https://releases.hashicorp.com/nomad/0.8.7/nomad_0.8.7_linux_amd64.zip
+
+SERVER_HCL = <<SERVERHCL# Increase log verbosity
+log_level = "DEBUG"
+
+# Setup data dir
+data_dir = "/tmp/server"
+
+# Enable the server
+server {
+    enabled = true
+
+    # Self-elect, should be 3 or 5 for production
+    bootstrap_expect = 1
+}
+SERVERHCL
+
+cat $SERVER_HCL > server.hcl
+
 sudo unzip -d /usr/local/bin /tmp/nomad.zip
 sudo nomad agent -config server.hcl
