@@ -5,4 +5,4 @@ sudo apt-get -y update
 sudo apt-get -y install unzip docker-engine curl
 curl -o /tmp/nomad.zip -L https://releases.hashicorp.com/nomad/0.8.7/nomad_0.8.7_linux_amd64.zip
 sudo unzip -d /usr/local/bin /tmp/nomad.zip
-mkdir -p /usr/local/etc/nomad
+sudo nomad agent -config server.hcl
